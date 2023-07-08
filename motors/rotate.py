@@ -48,3 +48,6 @@ def rotate_motor():
         if (stepCounter < 0):
             stepCounter = stepCount+stepDir
         time.sleep(waitTime)     # Wait before moving on
+
+####DELETE AFTER TESTING
+rotate_motor()
