@@ -16,6 +16,14 @@ def run_motor():
     rotate.rotate_motor()
     # return render_template('index.html')
 
+@app.route("/api")
+def api_test():
+    response_body = {
+        'name': 'test',
+        'context': 'this is a test api call'
+    }
+    return response_body
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

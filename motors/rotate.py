@@ -33,7 +33,7 @@ def rotate_motor():
     waitTime = 0.004
     stepCounter = 0
 
-    for i in range(9000):
+    while True:
         print(i)                          # Start main loop
         for pin in range(0, 4):
             xPin = stepPins[pin]          # Get GPIO
@@ -48,5 +48,6 @@ def rotate_motor():
             stepCounter = stepCount+stepDir
         time.sleep(waitTime)     # Wait before moving on
 
+    return 1
 
 
