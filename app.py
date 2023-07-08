@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import requests
 from flask_cors import CORS
 from motors import rotate, test
@@ -22,7 +22,7 @@ def api_test():
         'name': 'test',
         'context': 'this is a test api call'
     }
-    return response_body
+    return jsonify(response_body)
 
 
 if __name__ == '__main__':
