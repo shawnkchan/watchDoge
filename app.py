@@ -8,11 +8,11 @@ cors = CORS(app)
 
 @app.route("/")
 def hello_world():
-    return render_template()
+    return render_template('index.html')
 
 @app.route("/motor")
 def run_motor():
-    rotate.rotate_motor('index.html')
+    rotate.rotate_motor()
 
 
 if __name__ == '__main__':
