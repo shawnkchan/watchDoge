@@ -29,11 +29,11 @@ def rotate_motor():
                [0, 0, 1, 0],
                [0, 0, 0, 1]]
     stepCount = len(seq)
-    if len(sys.argv) > 1:  # Read wait time from command line
-        waitTime = int(sys.argv[1])/float(1000)
-    else:
-        waitTime = 0.004    # 2 miliseconds was the maximun speed got on my tests
-
+    # if len(sys.argv) > 1:  # Read wait time from command line
+    #     waitTime = int(sys.argv[1])/float(1000)
+    # else:
+    #     waitTime = 0.004    # 2 miliseconds was the maximun speed got on my tests
+    waitTime = 0.004
     stepCounter = 0
 
     while True:                          # Start main loop
