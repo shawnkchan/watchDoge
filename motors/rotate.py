@@ -51,5 +51,4 @@ def rotate_motor():
         time.sleep(waitTime)     # Wait before moving on
 
 
-# DELETE AFTER TESTING
-rotate_motor()
+
