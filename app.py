@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import requests
 from flask_cors import CORS
 from motors import rotate
@@ -8,11 +8,11 @@ cors = CORS(app)
 
 @app.route("/")
 def hello_world():
-    return "<p>HELLO WORLD</p>"
+    return render_template()
 
 @app.route("/motor")
 def run_motor():
-    rotate.rotate_motor()
+    rotate.rotate_motor('index.html')
 
 
 if __name__ == '__main__':
