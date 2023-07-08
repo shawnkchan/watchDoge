@@ -4,10 +4,10 @@ import sys
 from gpiozero import OutputDevice as stepper
 
 def rotate_motor():
-    IN1 = stepper(12)
-    IN2 = stepper(16)
-    IN3 = stepper(20)
-    IN4 = stepper(21)
+    IN1 = stepper(17)
+    IN2 = stepper(18)
+    IN3 = stepper(27)
+    IN4 = stepper(22)
     stepPins = [IN1,IN2,IN3,IN4] # Motor GPIO pins</p><p>
     stepDir = -1        # Set to 1 for clockwise
                             # Set to -1 for anti-clockwise
