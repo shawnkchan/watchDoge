@@ -14,7 +14,7 @@ def hello_world():
 @app.route("/motor")
 def run_motor():
     rotate.rotate_motor()
-    return render_template('index.html')
+    # return render_template('index.html')
 
 
 if __name__ == '__main__':
