@@ -27,7 +27,7 @@ def rotate_motor():
                     [0,1,0,0],
                     [0,0,1,0],
                     [0,0,0,1]]
-        stepCount = len(seq)
+    stepCount = len(seq)
     if len(sys.argv)>1: # Read wait time from command line
         waitTime = int(sys.argv[1])/float(1000)
     else:
