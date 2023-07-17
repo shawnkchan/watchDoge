@@ -4,21 +4,18 @@ from flask_cors import CORS
 from motors import rotate, test
 import cv2
 import numpy
+from camera import VideoCamera
 
-
+pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
 cors = CORS(app)
-video = cv2.VideoCapture(0)
 
-def video_stream():
+def gen(camera):
+    #get camera frame
     while True:
-        ret,frame=video.read()
-        if not ret:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpeg', frame)
-            frame = buffer.tobytes()
-            yield (b' --frame\r\n' b'Content-type: imgae/jpeg\r\n\r\n' + frame +b'\r\n')
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
 @app.route("/")
@@ -41,7 +38,8 @@ def api_test():
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(pi_camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
