@@ -26,7 +26,7 @@ def hello_world():
 @app.route("/motor")
 def run_motor():
     rotate.rotate_motor()
-    # return render_template('index.html')
+    return render_template('rotate.html')
 
 @app.route("/api")
 def api_test():
@@ -38,12 +38,14 @@ def api_test():
 
 @app.route('/video_feed')
 def video_feed():
+
     return Response(gen(pi_camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/stop_video')
 def stop_video():
     pi_camera.__del__()
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
