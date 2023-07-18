@@ -10,9 +10,9 @@ pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
 cors = CORS(app)
 
-def gen(camera):
+def gen(camera, flag):
     #get camera frame
-    while True:
+    while flag:
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -38,15 +38,13 @@ def api_test():
 
 @app.route('/video_feed')
 def video_feed():
-    pi_camera.__start__()
-    return Response(gen(pi_camera),
+    return Response(gen(pi_camera, True),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/stop_video')
 def stop_video():
-    pi_camera.__del__()
-    response_body = {'success'}
-    return jsonify(response_body)
+    return Response(gen(pi_camera, False),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 if __name__ == '__main__':
