@@ -38,7 +38,7 @@ def api_test():
 
 @app.route('/video_feed')
 def video_feed():
-
+    pi_camera.__start__()
     return Response(gen(pi_camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
