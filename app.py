@@ -45,6 +45,8 @@ def video_feed():
 @app.route('/stop_video')
 def stop_video():
     pi_camera.__del__()
+    response_body = {'success'}
+    return jsonify(response_body)
 
 
 if __name__ == '__main__':
