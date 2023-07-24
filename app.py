@@ -5,6 +5,7 @@ from motors import rotate, test
 import cv2
 import numpy
 from cameraCode import VideoCamera
+import threading
 
 pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
@@ -48,6 +49,12 @@ def stop_video():
     response_body = {'success'}
     return jsonify(response_body)
 
+def start_camera_stream():
+    camera_thread = threading.Thread(target=gen(pi_camera))
+    camera_thread.daemon = True
+    camera_thread.start()
+
 
 if __name__ == '__main__':
+    start_camera_stream()
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
