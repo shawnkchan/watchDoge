@@ -50,7 +50,7 @@ def stop_video():
     return jsonify(response_body)
 
 def start_camera_stream():
-    camera_thread = threading.Thread(target=gen(pi_camera))
+    camera_thread = threading.Thread(target=gen, args=(pi_camera))
     camera_thread.daemon = True
     camera_thread.start()
 
