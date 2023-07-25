@@ -1,7 +1,10 @@
+from urllib import response
 from flask import Flask, request, render_template, jsonify, render_template, stream_with_context, Response
 # import requests
 # from flask_cors import CORS
 from motors import rotate, test
+import time
+from time import sleep
 import cv2
 import numpy
 from cameraCode import VideoCamera
@@ -41,11 +44,16 @@ def video_feed():
     return Response(gen(pi_camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/stop_video')
-def stop_video():
-    pi_camera.__del__()
-    response_body = {'success'}
+@app.route('/api2')
+def api_test2():
+    response_body = {
+        'name': 'test2'
+    }
+
+    sleep(10)
+
     return jsonify(response_body)
+
 
 
 
