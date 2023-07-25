@@ -1,13 +1,13 @@
 from flask import Flask, request, render_template, jsonify, render_template, stream_with_context, Response
-import requests
-from flask_cors import CORS
+# import requests
+# from flask_cors import CORS
 from motors import rotate, test
 import cv2
 import numpy
 from cameraCode import VideoCamera
 pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
-cors = CORS(app)
+# cors = CORS(app)
 
 def gen(camera):
     #get camera frame
