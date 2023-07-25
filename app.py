@@ -5,11 +5,12 @@ from motors import rotate, test
 import cv2
 import numpy
 from cameraCode import VideoCamera
-import threading
+from flask_socketio import SocketIO, emit
 
 pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
 cors = CORS(app)
+socketio = SocketIO(app)
 
 def gen(camera):
     #get camera frame
@@ -41,20 +42,15 @@ def api_test():
 def video_feed():
     #returns a HTTP response to the client when this API is called
     return Response(gen(pi_camera),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+                    content_type='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/stop_video')
-def stop_video():
-    pi_camera.__del__()
-    response_body = {'success'}
-    return jsonify(response_body)
+@socketio.on('request_camera_feed')
+def send_camera_feed():
+    for frame in gen(pi_camera):
+        socketio.emit('camera_frame', {'frame': frame}, namespace='/camera')
 
-def start_camera_stream():
-    camera_thread = threading.Thread(target=gen, args=(pi_camera))
-    camera_thread.daemon = True
-    camera_thread.start()
+    
 
 
 if __name__ == '__main__':
-    start_camera_stream()
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    socketio.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
