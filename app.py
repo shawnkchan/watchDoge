@@ -7,7 +7,7 @@ import time
 from time import sleep
 import cv2
 import numpy
-from cameraCode import VideoCamera
+# from cameraCode import VideoCamera
 import picamera
 import cv2
 import socket
