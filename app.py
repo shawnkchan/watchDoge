@@ -7,8 +7,8 @@ import time
 from time import sleep
 import cv2
 import numpy
-from cameraCode import VideoCamera
-pi_camera = VideoCamera(flip=False)
+# from cameraCode import VideoCamera
+# pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
 # cors = CORS(app)
 
