@@ -19,6 +19,8 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        socketio.emit('video_stream', {'data': frame})
+
 
 @socketio.on('connect')
 def handle_connect():
@@ -42,20 +44,12 @@ def api_test():
     }
     return jsonify(response_body)
 
-# @app.route('/video_feed')
-# def video_feed():
-#     # """Video streaming route. Put this in the src attribute of an img tag."""
-#     return Response(gen(Camera()),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
-def video_stream():
-    cap = cv2.VideoCapture(0)  # Use the appropriate camera index
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        _, buffer = cv2.imencode('.jpg', frame)  # Convert frame to JPEG
-        frame_data = buffer.tobytes()
-        socketio.emit('video_stream', {'data': frame_data})
+@app.route('/video_feed')
+def video_feed():
+    # """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route('/api2')
 def api_test2():
