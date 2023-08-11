@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Include the Socket.IO library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+
 </head>
+
 <body>
     <h1>Home page</h1>
     <a href="/motor">Turn Motor</a>
@@ -13,5 +17,25 @@
     <img src="/video_feed">
     <a href="/api">api1</a>
     <a href="/api2">api2</a>
+
+    <script>
+        const socket = io('http://192.168.68.121:5000');  // Replace with your Raspberry Pi's IP address
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        const videoFrame = document.getElementById('video-frame');
+
+        socket.on('video_stream', (data) => {
+            const frameData = data.data;
+            const frameUrl = 'data:image/jpeg;base64,' + frameData;
+            videoFrame.src = frameUrl;
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+    </script>
 </body>
 </html>
