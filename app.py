@@ -64,5 +64,5 @@ def api_test2():
 # if __name__ == '__main__':
 #     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 if __name__ == '__main__':
-    socketio.start_background_task(video_stream)
+    socketio.start_background_task(video_feed)
     socketio.run(app)
