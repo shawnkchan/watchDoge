@@ -8,22 +8,19 @@ from time import sleep
 import cv2
 import numpy
 # from cameraCode import VideoCamera
-import picamera
-import cv2
-import socket
-import io
+from cameraCode import Camera
 
 # pi_camera = VideoCamera(flip=False)
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
 # cors = CORS(app)
 
-def gen():
+def gen(camera):
+    # """Video streaming generator function."""
     while True:
-        rval, frame = vc.read()
-        cv2.imwrite('t.jpg', frame)
+        frame = camera.get_frame()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + open('t.jpg', 'rb').read() + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route("/")
@@ -47,8 +44,9 @@ def api_test():
 @app.route('/video_feed')
 def video_feed():
     # """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(),
+    return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route('/api2')
 def api_test2():
