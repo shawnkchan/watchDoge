@@ -1,19 +1,17 @@
 from urllib import response
 from flask import Flask, request, render_template, jsonify, render_template, stream_with_context, Response
-# import requests
-# from flask_cors import CORS
 from motors import rotate, test
 import time
 from time import sleep
 import cv2
 import numpy
-# from cameraCode import VideoCamera
+from flask_socketio import SocketIO, emit
 from cameraCode import Camera
 
-# pi_camera = VideoCamera(flip=False)
+
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
-# cors = CORS(app)
+socketio = SocketIO(app)
 
 def gen(camera):
     # """Video streaming generator function."""
@@ -22,6 +20,9 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+@socketio.on('connect')
+def handle_connect():
+    print('client connected')
 
 @app.route("/")
 def hello_world():
@@ -41,23 +42,33 @@ def api_test():
     }
     return jsonify(response_body)
 
-@app.route('/video_feed')
-def video_feed():
-    # """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
+# @app.route('/video_feed')
+# def video_feed():
+#     # """Video streaming route. Put this in the src attribute of an img tag."""
+#     return Response(gen(Camera()),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+def video_stream():
+    cap = cv2.VideoCapture(0)  # Use the appropriate camera index
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        _, buffer = cv2.imencode('.jpg', frame)  # Convert frame to JPEG
+        frame_data = buffer.tobytes()
+        socketio.emit('video_stream', {'data': frame_data})
 
 @app.route('/api2')
 def api_test2():
     response_body = {
         'name': 'test2'
     }
-
     sleep(10)
 
     return jsonify(response_body)
 
 
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    socketio.start_background_task(video_stream)
+    socketio.run(app)
