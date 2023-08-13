@@ -35,13 +35,15 @@ def hello_world():
 
 @app.route("/motor")
 def run_motor():
-    rotate.rotate_motor(1)
+    rotate.turn_motor()
+    return "motor turning"
     # return render_template('rotate.html')
 
-@app.route("/stopMotor")
-def stop_motor():
-    rotate.rotate_motor(0)
-    return 1
+# @app.route("/stopMotor")
+# def stop_motor():
+#     rotate.rotate_motor(0)
+#     return "motor stopped"
+#     # return jsonify({'data':'stop motor'})
 
 @app.route("/api")
 def api_test():
