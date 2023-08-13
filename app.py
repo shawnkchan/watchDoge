@@ -35,7 +35,7 @@ def hello_world():
 
 @app.route("/motor")
 def run_motor():
-    # rotate.turn_motor()
+    rotate.turn_motor(True)
     return "motor turning"
     # return render_template('rotate.html')
 
