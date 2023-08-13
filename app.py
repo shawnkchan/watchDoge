@@ -7,11 +7,13 @@ import cv2
 import numpy
 from flask_socketio import SocketIO, emit
 from cameraCode import Camera
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
 socketio = SocketIO(app)
+cors = CORS(app, resources={r"/": {"origins": "http://192.168.68.106:3001"}})
 
 def gen(camera):
     # """Video streaming generator function."""
