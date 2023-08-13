@@ -13,7 +13,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
 socketio = SocketIO(app)
-cors = CORS(app, resources={r"/": {"origins": "http://192.168.68.106:3001"}})
+CORS(app)
 
 def gen(camera):
     # """Video streaming generator function."""
