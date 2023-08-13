@@ -41,6 +41,7 @@ def run_motor():
 @app.route("/stopMotor")
 def stop_motor():
     rotate.rotate_motor(0)
+    return 1
 
 @app.route("/api")
 def api_test():
