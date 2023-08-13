@@ -12,8 +12,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 vc = cv2.VideoCapture(0)
+cors = CORS(app, resources={r"/socket.io/*": {"origins": "http://192.168.68.106:3001"}})
 socketio = SocketIO(app)
-CORS(app)
 
 def gen(camera):
     # """Video streaming generator function."""
@@ -35,8 +35,12 @@ def hello_world():
 
 @app.route("/motor")
 def run_motor():
-    rotate.rotate_motor()
+    rotate.rotate_motor(1)
     # return render_template('rotate.html')
+
+@app.route("/stopMotor")
+def stop_motor():
+    rotate.rotate_motor(0)
 
 @app.route("/api")
 def api_test():

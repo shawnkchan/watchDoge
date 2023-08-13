@@ -4,7 +4,7 @@ import sys
 from gpiozero import OutputDevice as stepper
 
 
-def rotate_motor():
+def rotate_motor(signal):
     IN1 = stepper(17)
     IN2 = stepper(18)
     IN3 = stepper(27)
@@ -33,8 +33,7 @@ def rotate_motor():
     waitTime = 0.004
     stepCounter = 0
 
-    for i in range(9000):
-        print(i)                          # Start main loop
+    if signal:                       # Start main loop
         for pin in range(0, 4):
             xPin = stepPins[pin]          # Get GPIO
             if seq[stepCounter][pin] != 0:
