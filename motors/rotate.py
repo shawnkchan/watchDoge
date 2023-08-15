@@ -61,7 +61,7 @@ def turn_motor(is_ccwise):
     my_motor.motor_run(
         gpiopins=[17, 18, 27, 22], 
         wait=.001, 
-        steps=10, 
+        steps=50, 
         ccwise=is_ccwise, 
         verbose=False, 
         steptype="half", # has 512 steps for 360 degrees
