@@ -33,14 +33,32 @@ def hello_world():
     test.test()
     return render_template('index.html')
 
+#Horizontal rotation
 @app.route("/motor/<direction>")
 def run_motor(direction):
     if direction == 'left':
-        rotate.turn_motor(True)
+        rotate.turn_motor(True, 17, 18, 27, 22)
+    elif direction == 'right':
+        rotate.turn_motor(False, 17, 18, 27, 22)
+    elif direction == 'up':
+        pass
+        # rotate.turn_motor(True, )
     else:
-        rotate.turn_motor(False)
+        pass
+        # rotate.turn_motor(False,)
     return "motor turning"
-    # return render_template('rotate.html')
+   
+
+#Vertical rotation
+# @app.route("/motor/")
+# def run_motor(direction):
+#     if direction == 'up':
+#         rotate.turn_motor(True, )
+#     else:
+#         rotate.turn_motor(False, )
+#     return "motor turning"
+
+
 
 # @app.route("/stopMotor")
 # def stop_motor():

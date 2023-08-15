@@ -55,11 +55,11 @@ import RPi.GPIO as GPIO
 from RpiMotorLib import RpiMotorLib
 
 
-def turn_motor(is_ccwise):
+def turn_motor(is_ccwise, in1, in2, in3, in4):
     my_motor = RpiMotorLib.BYJMotor("MyMotor", "28BYJ")
     
     my_motor.motor_run(
-        gpiopins=[17, 18, 27, 22], 
+        gpiopins=[in1, in2, in3, in4], 
         wait=.001, 
         steps=50, 
         ccwise=is_ccwise, 
