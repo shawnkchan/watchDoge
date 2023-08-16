@@ -42,10 +42,10 @@ def run_motor(direction):
         rotate.turn_motor(False, 17, 18, 27, 22)
     elif direction == 'up':
         pass
-        # rotate.turn_motor(True, )
+        rotate.turn_motor(True, 5,6,13,26)
     else:
         pass
-        # rotate.turn_motor(False,)
+        rotate.turn_motor(False, 5,6,13,26)
     return "motor turning"
    
 
